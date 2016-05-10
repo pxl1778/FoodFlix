@@ -1,8 +1,20 @@
 var map;
+<<<<<<< HEAD
       var infowindow;
       
 
       function initMap() {
+=======
+var infowindow;
+var browserSupportFlag =  new Boolean();
+var initialLocation;
+var currentPosition;
+var window = window;
+
+
+
+function initMap() {
+>>>>>>> e37b0467a9687b795435ef14320eefa4b17cbd0a
        var mapOptions = {
 	       center: {lat: 39, lng:-95},
 	       zoom: 4,
@@ -10,6 +22,39 @@ var map;
        };
 	   
        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+       currentPosition = new google.maps.LatLng(43.08359, -77.66921);
+       
+       //getting user's location
+       if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position)
+        {
+          currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude};
+          console.log(currentPosition.lat);
+        },
+        function showError(error) {
+          switch(error.code) {
+          case error.PERMISSION_DENIED:
+              console.log("User denied the request for Geolocation.")
+              break;
+          case error.POSITION_UNAVAILABLE:
+              console.log("Location information is unavailable.")
+              break;
+          case error.TIMEOUT:
+              console.log("The request to get user location timed out.")
+              break;
+          case error.UNKNOWN_ERROR:
+              console.log("An unknown error occurred.")
+              break;
+          }
+        });
+        map.setCenter(currentPosition);
+    }
+    else 
+    {
+        console.log("failed");
+    }
+    //end getting user's location
+       
        function addMarker(latitude, longitude, title) {
 	       var position = {lat:latitude, lng:longitude};
 	       var marker = new google.maps.Marker({position: position, map: map});
@@ -60,6 +105,7 @@ var map;
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(17, 34),
         scaledSize: new google.maps.Size(25, 25)
+<<<<<<< HEAD
       };
 
       // Create a marker for each place.
@@ -96,3 +142,50 @@ var map;
       }
       }
       
+=======
+      };
+
+      // Create a marker for each place.
+      markers.push(new google.maps.Marker({
+        map: map,
+        icon: icon,
+        title: place.name,
+        position: place.geometry.location
+      }));
+
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+    map.fitBounds(bounds);
+  });
+}
+//end of init
+
+document.querySelector('#defaultZoomButton').onclick = function(){
+  map.setZoom(4);  
+};
+
+document.querySelector('#buildingZoomButton').onclick = function(){
+  map.setZoom(20);  
+};
+
+document.querySelector('#yourPositionZoomButton').onclick = function(){
+  map.setZoom(18);  
+  map.setCenter(currentPosition);
+};
+
+function makeInfoWindow(position, msg){
+  if(infowindow) infowindow.close();
+  infowindow = new google.maps.InfoWindow({
+    map: map, 
+    position: position,
+    content: "<b>" + msg + "</b>"
+  });
+}
+
+      
+>>>>>>> e37b0467a9687b795435ef14320eefa4b17cbd0a

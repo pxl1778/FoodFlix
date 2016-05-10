@@ -13,18 +13,19 @@
       }
       
       h1{
-	      color: #F5F3EE;
+	       color: #F5F3EE;
 	      margin: 0 auto 0 auto;
 	      padding: 0;
 	      text-align: center;
 	      font-family: 'Pacifico', cursive;
 	      font-size: 2.5em;
+
 		  background-color: rgba(125, 25, 53, 0.9);
 		  border-bottom: 1px white solid;
 		  letter-spacing: 2px;
 		  font-weight: thin;
+		  }
 		  
-      }
       #map {
 	    right: 1%;
 	    top: 2%;
@@ -32,10 +33,12 @@
         width: 70%;
         float: right;
          box-shadow: 0 6px rgba(0, 0, 0, 0.3);
+
       }
       
       button {
 	      position: absolute;
+
 	      color: #000;
 	      font-weight: bold;
 	      height: 30px;
@@ -54,8 +57,8 @@
 	      left: 30%;
       }
       
-        
-      #isometricZoomButton{
+  
+      #yourPositionZoomButton{
 	      top: 220px;
 	      left: 30%;
       }
@@ -120,14 +123,16 @@
   <h1><img src="food.png" height='40px' width='auto'/>  FoodFlix <img src="reel.png" height='40px' width='auto' /></h1>
 	<input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <div id="map"></div>
-    <p><button id="defaultZoomButton"> Center</button></p>
+ <p><button id="yourPositionZoomButton"> Your Position </button></p>
     
      <footer> 
 	     &copy; 2016
 	      <br > Peter Lockhart & Sara Artese 
      </footer>
+  </body>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAbOhh6xVZkUi6H-7aPbpJ5ss8RsCz88Y&callback=initMap&libraries=places"
     async defer></script>
     <script src="main.js"></script>
-  </body>
-</html>
+    </style>
+    
+  </html>
