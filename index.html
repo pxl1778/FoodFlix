@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Food Flix</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      
+      h1{
+	      color: #F5F3EE;
+	      margin: 0 auto 0 auto;
+	      padding: 0;
+	      text-align: center;
+	      font-family: 'Pacifico', cursive;
+	      font-size: 2.5em;
+		  background-color: rgba(125, 25, 53, 0.9);
+		  border-bottom: 1px white solid;
+		  letter-spacing: 2px;
+		  font-weight: thin;
+		  
+      }
+      #map {
+	    right: 1%;
+	    top: 2%;
+        height: 80%;
+        width: 70%;
+        float: right;
+         box-shadow: 0 6px rgba(0, 0, 0, 0.3);
+      }
+      
+      button {
+	      position: absolute;
+	      color: #000;
+	      font-weight: bold;
+	      height: 30px;
+	      width: 55px;
+	      z-index: 100;
+      }
+      
+      
+      #defaultZoomButton{
+	      top: 140px;
+	      left: 30%;
+      }
+      
+      #buildingZoomButton{
+	      top: 180px;
+	      left: 30%;
+      }
+      
+        
+      #isometricZoomButton{
+	      top: 220px;
+	      left: 30%;
+      }
+      
+      
+      .controls {
+        margin-top: 10px;
+        border: 1px solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        height: 32px;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 200px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      .pac-container {
+        font-family: Roboto;
+      }
+
+      #type-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        padding: 5px 11px 0px 11px;
+      }
+
+      #type-selector label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+      #target {
+        width: 345px;
+      }
+      
+      footer {
+	      width: 100%;
+	      bottom: 0px;
+	      position: absolute;
+	      text-align: center;
+	      font-size: .8em;
+      }
+      
+    </style>
+  </head>
+  <body>
+  <h1><img src="food.png" height='40px' width='auto'/>  FoodFlix <img src="reel.png" height='40px' width='auto' /></h1>
+	<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+    <div id="map"></div>
+    <p><button id="defaultZoomButton"> Center</button></p>
+    
+     <footer> 
+	     &copy; 2016
+	      <br > Peter Lockhart & Sara Artese 
+     </footer>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAbOhh6xVZkUi6H-7aPbpJ5ss8RsCz88Y&callback=initMap&libraries=places"
+    async defer></script>
+    <script src="main.js"></script>
+  </body>
+</html>
