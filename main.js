@@ -1,20 +1,8 @@
 var map;
-<<<<<<< HEAD
-      var infowindow;
-      
-
-      function initMap() {
-=======
 var infowindow;
-var browserSupportFlag =  new Boolean();
-var initialLocation;
 var currentPosition;
-var window = window;
-
-
 
 function initMap() {
->>>>>>> e37b0467a9687b795435ef14320eefa4b17cbd0a
        var mapOptions = {
 	       center: {lat: 39, lng:-95},
 	       zoom: 4,
@@ -105,44 +93,6 @@ function initMap() {
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(17, 34),
         scaledSize: new google.maps.Size(25, 25)
-<<<<<<< HEAD
-      };
-
-      // Create a marker for each place.
-      markers.push(new google.maps.Marker({
-        map: map,
-        icon: icon,
-        title: place.name,
-        position: place.geometry.location
-      }));
-
-      if (place.geometry.viewport) {
-        // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
-      } else {
-        bounds.extend(place.geometry.location);
-      }
-    });
-    map.fitBounds(bounds);
-  });
-
-      
-       document.querySelector('#defaultZoomButton').onclick = function(){
-	    map.setZoom(4);  
-      };
-            
-      function makeInfoWindow(position, msg){
-	      if(infowindow) infowindow.close();
-	      infowindow = new google.maps.InfoWindow({
-		      map: map, 
-		      position: position,
-		      content: "<b>" + msg + "</b>"
-	      });  
-	      
-      }
-      }
-      
-=======
       };
 
       // Create a marker for each place.
@@ -165,14 +115,6 @@ function initMap() {
 }
 //end of init
 
-document.querySelector('#defaultZoomButton').onclick = function(){
-  map.setZoom(4);  
-};
-
-document.querySelector('#buildingZoomButton').onclick = function(){
-  map.setZoom(20);  
-};
-
 document.querySelector('#yourPositionZoomButton').onclick = function(){
   map.setZoom(18);  
   map.setCenter(currentPosition);
@@ -187,5 +129,3 @@ function makeInfoWindow(position, msg){
   });
 }
 
-      
->>>>>>> e37b0467a9687b795435ef14320eefa4b17cbd0a
