@@ -5,13 +5,24 @@ var initialLocation;
 var currentPosition;
 var window = window;
 
-window.onload = function(){
-  
-  if(navigator.geolocation) {
+
+
+function initMap() {
+       var mapOptions = {
+	       center: {lat: 39, lng:-95},
+	       zoom: 4,
+	       mapTypeId: google.maps.MapTypeId.ROADMAP 
+       };
+	   
+       map = new google.maps.Map(document.getElementById('map'), mapOptions);
+       currentPosition = new google.maps.LatLng(43.08359, -77.66921);
+       
+       //getting user's location
+       if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position)
         {
-          console.log(position.coords.latitude);
-          currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude};
+          console.log(currentPosition.lat);
         },
         function showError(error) {
           switch(error.code) {
@@ -29,23 +40,13 @@ window.onload = function(){
               break;
           }
         });
-    map.setCenter(currentPosition);
+        map.setCenter(currentPosition);
     }
     else 
     {
         console.log("failed");
     }
-}
-
-function initMap() {
-       var mapOptions = {
-	       center: {lat: 39, lng:-95},
-	       zoom: 4,
-	       mapTypeId: google.maps.MapTypeId.ROADMAP 
-       };
-	   
-       map = new google.maps.Map(document.getElementById('map'), mapOptions);
-       currentPosition = new google.maps.LatLng(43.08359, -77.66921);
+    //end getting user's location
        
        function addMarker(latitude, longitude, title) {
 	       var position = {lat:latitude, lng:longitude};
@@ -127,8 +128,9 @@ document.querySelector('#buildingZoomButton').onclick = function(){
   map.setZoom(20);  
 };
 
-document.querySelector('#isometricZoomButton').onclick = function(){
+document.querySelector('#yourPositionZoomButton').onclick = function(){
   map.setZoom(18);  
+  map.setCenter(currentPosition);
 };
 
 function makeInfoWindow(position, msg){
