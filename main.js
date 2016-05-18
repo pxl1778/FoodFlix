@@ -128,12 +128,20 @@ function initMap() {
       };
 
       // Create a marker for each place.
-      restaurantmarkers.push(new google.maps.Marker({
-        map: map,
+      //restaurantmarkers.push(new google.maps.Marker({
+        restmarker = new google.maps.Marker({
+	    map: map,
         icon: icon,
         title: place.name,
-        position: place.geometry.location
-      }));
+        position: place.geometry.location,
+        animation: google.maps.Animation.DROP
+        });
+        
+        restmarker.addListener('click', restmarkerInf);
+        function restmarkerInf() {
+			infowindow.setContent(place.name + " " + place.rating);
+			infowindow.open(map, this); 
+      };
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
@@ -157,7 +165,7 @@ function initMap() {
       marker.setMap(null);
     });
     
-    restaurantmarkers = [];
+    theatermarkers = [];
 
     // For each place, get the icon, name and location.
     var bounds = new google.maps.LatLngBounds();
@@ -171,12 +179,20 @@ function initMap() {
       };
 
       // Create a marker for each place.
-      restaurantmarkers.push(new google.maps.Marker({
+      //theatermarkers.push(new google.maps.Marker({
+	    theatermarker = new google.maps.Marker({
         map: map,
         icon: icon,
         title: place.name,
-        position: place.geometry.location
-      }));
+        position: place.geometry.location,
+        animation: google.maps.Animation.DROP
+        });
+        
+        theatermarker.addListener('click', theatermarkerInf);
+        function theatermarkerInf() {
+			infowindow.setContent(place.name + " " + place.rating);
+			infowindow.open(map, this); 
+      };
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
