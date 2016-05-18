@@ -7,8 +7,10 @@ function initMap() {
       center: {lat: 39, lng:-95},
       zoom: 4,
       mapTypeId: google.maps.MapTypeId.ROADMAP 
+      
   };
   
+  var infowindow = new google.maps.InfoWindow();
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
   currentPosition = new google.maps.LatLng(43.08359, -77.66921);
   
@@ -38,9 +40,11 @@ function initMap() {
         return;
       }
 
+
       // Clear out the old markers.
       markers.forEach(function(marker) {
         marker.setMap(null);
+
       });
       
       locationmarkers = [];
@@ -55,15 +59,23 @@ function initMap() {
           anchor: new google.maps.Point(17, 34),
           scaledSize: new google.maps.Size(25, 25)
         };
-
+        
         // Create a marker for each place.
-        locationmarkers.push(new google.maps.Marker({
+       // locationmarkers.push(new google.maps.Marker({
+         marker = new google.maps.Marker({
           map: map,
           icon: icon,
           title: place.name,
-          position: place.geometry.location
-        }));
-
+          position: place.geometry.location,
+           animation: google.maps.Animation.DROP
+        });
+        
+        marker.addListener('click', markerInf);
+        function markerInf() {
+			infowindow.setContent(place.name + " " + place.rating);
+			infowindow.open(map, this);
+ 
+};     
         if (place.geometry.viewport) {
           // Only geocodes have viewport.
           bounds.union(place.geometry.viewport);
@@ -72,21 +84,7 @@ function initMap() {
         }
       });
       map.fitBounds(bounds);
-  });
-  
-  function addMarker(latitude, longitude, title) {
-      var position = {lat:latitude, lng:longitude};
-      var marker = new google.maps.Marker({position: position, map: map});
-      marker.setTitle(title);
-      
-      google.maps.event.addListener(marker, 'click', function(e){
-        makeInfoWindow(this.position, this.title);
-      });
-      
-      map.mapTypeId = 'satellite';
-      map.setTilt(45);
-  }
-  
+  }); 
 }
 //end of init
 
@@ -122,15 +120,15 @@ document.querySelector('#yourPositionZoomButton').onclick = function(){
     else 
     {
         console.log("failed");
-    }
+}
+
 };
 
-function makeInfoWindow(position, msg){
-  if(infowindow) infowindow.close();
-  infowindow = new google.maps.InfoWindow({
-    map: map, 
-    position: position,
-    content: "<b>" + msg + "</b>"
-  });
-}
+     
+
+
+
+
+
+
 
