@@ -62,6 +62,8 @@ function initMap() {
         marker.setMap(null);
 
       });
+      $('#restaurant-input').fadeIn();
+  $('#theater-input').fadeIn();
       
       locationmarkers = [];
 
@@ -192,6 +194,8 @@ function initMap() {
 
 //Your Position button
 document.querySelector('#yourPositionZoomButton').onclick = function(){
+  $('#restaurant-input').fadeIn();
+  $('#theater-input').fadeIn();
   //getting user's location
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position)
