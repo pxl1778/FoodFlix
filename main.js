@@ -13,26 +13,35 @@ function initMap() {
   currentPosition = new google.maps.LatLng(43.08359, -77.66921);
   
   // Create the search box and link it to the UI element.
-  var input = document.getElementById('loc-input');
+  var locationInput = document.getElementById('loc-input');
+  var restaurantInput = document.getElementById('restaurant-input');
   
   //limits search to cities
   var options = {
     types: ['(cities)']
   };
     
-	var searchBox = new google.maps.places.SearchBox(input, options);
+	var locationSearchBox = new google.maps.places.SearchBox(locationInput, options);
+  
+  //restaurant options
+  options = {
+    types: ['(restaurant)']
+  };
+  
+  var restaurantSearchBox = new google.maps.places.SearchBox(restaurantInput, options);
 
   // Bias the SearchBox results towards current map's viewport.
   map.addListener('bounds_changed', function() {
-    searchBox.setBounds(map.getBounds());
+    locationSearchBox.setBounds(map.getBounds());
+    restaurantSearchBox.setBounds(map.getBounds());
   });
   
   var markers = [];
   
   // Listen for the event fired when the user selects a prediction and retrieve
   // more details for that place.
-  searchBox.addListener('places_changed', function() {
-      var places = searchBox.getPlaces();
+  locationSearchBox.addListener('places_changed', function() {
+      var places = locationSearchBox.getPlaces();
 
       if (places.length == 0) {
         return;
@@ -70,6 +79,49 @@ function initMap() {
         } else {
           bounds.extend(place.geometry.location);
         }
+      });
+      map.fitBounds(bounds);
+  });
+  
+  restaurantSearchBox.addListener('places_changed', function(){
+    var places = restaurantSearchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
+    }
+
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    
+    restaurantmarkers = [];
+
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+      var icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+
+      // Create a marker for each place.
+      restaurantmarkers.push(new google.maps.Marker({
+        map: map,
+        icon: icon,
+        title: place.name,
+        position: place.geometry.location
+      }));
+
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
       });
       map.fitBounds(bounds);
   });
@@ -117,7 +169,6 @@ document.querySelector('#yourPositionZoomButton').onclick = function(){
               break;
           }
         });
-
     }
     else 
     {
