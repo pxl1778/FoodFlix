@@ -2,6 +2,7 @@ var map;
 var infowindow;
 var currentPosition;
 
+window.onload = initMap;
 function initMap() {
   var mapOptions = {
       center: {lat: 39, lng:-95},
@@ -15,6 +16,7 @@ function initMap() {
   // Create the search box and link it to the UI element.
   var locationInput = document.getElementById('loc-input');
   var restaurantInput = document.getElementById('restaurant-input');
+  var theaterInput = document.getElementById('theater-input');
   
   //limits search to cities
   var options = {
@@ -25,15 +27,20 @@ function initMap() {
   
   //restaurant options
   options = {
-    types: ['(restaurant)']
+    type: ['restaurant']
   };
   
-  var restaurantSearchBox = new google.maps.places.SearchBox(restaurantInput, options);
+  var restaurantSearchBox = new google.maps.places.SearchBox(restaurantInput);
+  restaurantSearchBox.setTypes = ['restaurant'];
+  
+  var theaterSearchBox = new google.maps.places.SearchBox(theaterInput);
+  
 
   // Bias the SearchBox results towards current map's viewport.
   map.addListener('bounds_changed', function() {
     locationSearchBox.setBounds(map.getBounds());
     restaurantSearchBox.setBounds(map.getBounds());
+    theaterSearchBox.setBounds(map.getBounds());
   });
   
   var markers = [];
@@ -85,6 +92,49 @@ function initMap() {
   
   restaurantSearchBox.addListener('places_changed', function(){
     var places = restaurantSearchBox.getPlaces();
+
+    if (places.length == 0) {
+      return;
+    }
+
+    // Clear out the old markers.
+    markers.forEach(function(marker) {
+      marker.setMap(null);
+    });
+    
+    restaurantmarkers = [];
+
+    // For each place, get the icon, name and location.
+    var bounds = new google.maps.LatLngBounds();
+    places.forEach(function(place) {
+      var icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
+
+      // Create a marker for each place.
+      restaurantmarkers.push(new google.maps.Marker({
+        map: map,
+        icon: icon,
+        title: place.name,
+        position: place.geometry.location
+      }));
+
+      if (place.geometry.viewport) {
+        // Only geocodes have viewport.
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+      });
+      map.fitBounds(bounds);
+  });
+  
+  theaterSearchBox.addListener('places_changed', function(){
+    var places = theaterSearchBox.getPlaces();
 
     if (places.length == 0) {
       return;
