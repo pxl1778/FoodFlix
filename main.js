@@ -63,7 +63,6 @@ function initMap() {
 
       });
       $('#restaurant-input').fadeIn();
-  $('#theater-input').fadeIn();
       
       locationmarkers = [];
 
@@ -93,7 +92,7 @@ function initMap() {
 			infowindow.setContent(place.name + " " + place.rating);
 			infowindow.open(map, this);
  
-};     
+      };     
         if (place.geometry.viewport) {
           // Only geocodes have viewport.
           bounds.union(place.geometry.viewport);
@@ -110,6 +109,8 @@ function initMap() {
     if (places.length == 0) {
       return;
     }
+    
+    $('#theater-input').fadeIn();
 
     // Clear out the old markers.
     markers.forEach(function(marker) {
@@ -195,7 +196,6 @@ function initMap() {
 //Your Position button
 document.querySelector('#yourPositionZoomButton').onclick = function(){
   $('#restaurant-input').fadeIn();
-  $('#theater-input').fadeIn();
   //getting user's location
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position)
