@@ -252,7 +252,8 @@ function initMap() {
       });
       map.fitBounds(bounds);
   });
-  
+  var directionsDisplay = new google.maps.DirectionsRenderer();// also, constructor can get "DirectionsRendererOptions" object
+    directionsDisplay.setMap(map); 
   //calculating and displaying the route.
   function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     directionsService.route({
