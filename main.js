@@ -28,8 +28,12 @@ function initMap() {
 
       
       // Create the search box and link it to the UI element.
-	  var input = document.getElementById('pac-input');
-	  var searchBox = new google.maps.places.SearchBox(input);
+	  var input = document.getElementById('loc-input');
+    var options = {
+  types: ['(cities)'],
+  componentRestrictions: {country: "us"}
+ };
+	  var searchBox = new google.maps.places.SearchBox(input, options);
 	 // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
   // Bias the SearchBox results towards current map's viewport.
@@ -84,13 +88,14 @@ function initMap() {
 }
 //end of init
 
+//Your Position button
 document.querySelector('#yourPositionZoomButton').onclick = function(){
   //getting user's location
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position)
         {
             currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude};
-            map.setZoom(18);  
+            map.setZoom(15);  
             map.setCenter(currentPosition);
         },
         //errors
