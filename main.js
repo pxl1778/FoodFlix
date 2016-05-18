@@ -89,7 +89,7 @@ function initMap() {
         
         marker.addListener('click', markerInf);
         function markerInf() {
-			infowindow.setContent(place.name + " " + place.rating);
+			infowindow.setContent(place.name);
 			infowindow.open(map, this);
  
       };     
@@ -142,9 +142,15 @@ function initMap() {
         
         restmarker.addListener('click', restmarkerInf);
         function restmarkerInf() {
-			infowindow.setContent(place.name + " " + place.rating);
+			infowindow.setContent('<a href="'+ place.website +'"> Website </a>' + place.name + " " + 
+			place.formattedaddress + " " + place.rating //+ " " + '<a onclick="javascript:pick()"> Select </a>'
+			);
 			infowindow.open(map, this); 
       };
+      
+      //function pick() {
+	//			print("hi");
+		//	};
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
