@@ -142,22 +142,35 @@ function initMap() {
         title: place.name,
         position: place.geometry.location,
         animation: google.maps.Animation.DROP
+
         });
         
         restmarker.addListener('click', restmarkerInf);
+        
+        if(place.rating)
+        rate = place.rating;
+        else
+        rate = "N/A";
+        
+        if(place.website)
+        site = '<a href="'+ place.website +'" target="_blank" style="text-decoration:none;"> Website </a>' ;      
+        else
+        site = '<p> No website </p>';
+        
         function restmarkerInf() {
-
-			infowindow.setContent('<a href="'+ place.website +'"> Website </a>' + place.name + " " + 
-			place.formattedaddress + " " + place.rating //+ " " + '<a onclick="javascript:pick()"> Select </a>'
-			);
-			infowindow.open(map, this); 
-      };
-      
-      //function pick() {
-	//			print("hi");
-		//	};
+			infowindow.setContent('<div class="infobox">' + '<h3>' +  place.name + '</h3>'
+			+ '</div>' + "Rating: " + rate + '<br>' + site + '<br>' +
+			place.formatted_address + '<div class="selected">' + '<a href="#" id="sel" style="text-decoration: none;"> Select </a>' +'</div>');
+			
+		    infowindow.open(map, this);	
+			document.getElementById ("sel").addEventListener ("click", selected);
           firstLoc = place.geometry.location;
           $('#theater-input').fadeIn();
+        	};
+        
+        function selected(){
+	        var id = place.place_id;
+	        console.log(id);
         };
 
       if (place.geometry.viewport) {
@@ -169,6 +182,7 @@ function initMap() {
       });
       map.fitBounds(bounds);
   });
+
   
   theaterSearchBox.addListener('places_changed', function(){
     var places = theaterSearchBox.getPlaces();
@@ -206,12 +220,34 @@ function initMap() {
         });
         
         theatermarker.addListener('click', theatermarkerInf);
+        if(place.rating)
+        rate = place.rating;
+        else
+        rate = "N/A";
+        
+        if(place.website)
+        site = '<a href="'+ place.website +'" target="_blank" style="text-decoration:none;"> Website </a>' ;      
+        else
+        site = '<p> No website </p>';
+           
         function theatermarkerInf() {
-          infowindow.setContent(place.name + " " + place.rating);
-          infowindow.open(map, this); 
+          infowindow.setContent('<div class="infobox">' + '<h3>' +  place.name + '</h3>'
+			+ '</div>' +  "Rating: " + rate + '<br>' + site + '<br>' +
+			place.formatted_address + '<div class="selected">' + '<a href="#" id="sel" style="text-decoration: none;"> Select </a>' +'</div>');
+
+          infowindow.open(map, this);
+          document.getElementById ("sel").addEventListener ("click", selected); 
           secondLoc = place.geometry.location;
           calculateAndDisplayRoute(directionsService, directionsDisplay);
       };
+      
+      function selected(){
+	        var id = place.place_id;
+	        console.log(id);
+        };
+      
+      
+      
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
