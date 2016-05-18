@@ -165,12 +165,11 @@ function initMap() {
 		    infowindow.open(map, this);	
 			document.getElementById ("sel").addEventListener ("click", selected);
           firstLoc = place.geometry.location;
-          $('#theater-input').fadeIn();
         	};
         
         function selected(){
-	        var id = place.place_id;
-	        console.log(id);
+	        firstLoc = place.geometry.location;
+          $('#theater-input').fadeIn();
         };
 
       if (place.geometry.viewport) {
@@ -237,13 +236,11 @@ function initMap() {
 
           infowindow.open(map, this);
           document.getElementById ("sel").addEventListener ("click", selected); 
-          secondLoc = place.geometry.location;
-          calculateAndDisplayRoute(directionsService, directionsDisplay);
       };
       
       function selected(){
-	        var id = place.place_id;
-	        console.log(id);
+	        secondLoc = place.geometry.location;
+          calculateAndDisplayRoute(directionsService, directionsDisplay);
         };
 
       if (place.geometry.viewport) {
@@ -256,6 +253,7 @@ function initMap() {
       map.fitBounds(bounds);
   });
   
+  //calculating and displaying the route.
   function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     directionsService.route({
       origin: firstLoc,
@@ -264,18 +262,17 @@ function initMap() {
     }, function(response, status) {
       if (status === google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);
-        // var route = response.routes[0];
-        // var summaryPanel = document.getElementById('directions-panel');
-        // summaryPanel.innerHTML = '';
-        // // For each route, display summary information.
-        // for (var i = 0; i < route.legs.length; i++) {
-        //   var routeSegment = i + 1;
-        //   summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-        //       '</b><br>';
-        //   summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-        //   summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-        //   summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-        // }
+        var route = response.routes[0];
+        var summaryPanel = document.getElementById('directions-panel');
+        summaryPanel.innerHTML = '';
+        // For each route, display summary information.
+        for (var i = 0; i < route.legs.length; i++) {
+          var routeSegment = i + 1;
+          summaryPanel.innerHTML += '<b>Distance: </b><br>';
+          summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+          summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+          summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+        }
       } else {
         console.log('Directions request failed due to ' + status);
       }
