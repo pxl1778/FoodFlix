@@ -159,14 +159,9 @@ function initMap() {
         
         function restmarkerInf() {
 			infowindow.setContent('<div class="infobox">' + '<h3>' +  place.name + '</h3>'
-<<<<<<< HEAD
 			+ '</div>' + "Rating: " + rate + '<br>' + site + '<br>' +
 			place.formatted_address + '<div class="selected">' + '<a href="#" id="sel" style="text-decoration: none;"> Select </a>' +'</div>');
 			
-=======
-			+ '</div>'+ '<a href="'+place.website +'" target="_blank"> Website </a>' +
-			place.formattedaddress + " " + place.rating + " " + '<a href="#" id="sel"> Select </a>' );
->>>>>>> 6ba265a057241fd5acd10160ea1cedf4487f7fd3
 		    infowindow.open(map, this);	
 			document.getElementById ("sel").addEventListener ("click", selected);
           firstLoc = place.geometry.location;
@@ -237,13 +232,9 @@ function initMap() {
            
         function theatermarkerInf() {
           infowindow.setContent('<div class="infobox">' + '<h3>' +  place.name + '</h3>'
-<<<<<<< HEAD
 			+ '</div>' +  "Rating: " + rate + '<br>' + site + '<br>' +
 			place.formatted_address + '<div class="selected">' + '<a href="#" id="sel" style="text-decoration: none;"> Select </a>' +'</div>');
 
-=======
-			+ '</div>' + place.name + " " + place.rating + '<a href="#" id="sel"> Select </a>');
->>>>>>> 6ba265a057241fd5acd10160ea1cedf4487f7fd3
           infowindow.open(map, this);
           document.getElementById ("sel").addEventListener ("click", selected); 
           secondLoc = place.geometry.location;
@@ -254,12 +245,6 @@ function initMap() {
 	        var id = place.place_id;
 	        console.log(id);
         };
-      
-<<<<<<< HEAD
-      
-      
-=======
->>>>>>> 6ba265a057241fd5acd10160ea1cedf4487f7fd3
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
