@@ -10,7 +10,12 @@ function initMap() {
       mapTypeId: google.maps.MapTypeId.ROADMAP 
       
   };
+  var directionsService = new google.maps.DirectionsService;
+  var directionsDisplay = new google.maps.DirectionsRenderer;
+  directionsDisplay.setMap(map);
   
+  var firstLoc;
+  var secondLoc;
   var infowindow = new google.maps.InfoWindow();
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
   currentPosition = new google.maps.LatLng(43.08359, -77.66921);
@@ -110,7 +115,6 @@ function initMap() {
       return;
     }
     
-    $('#theater-input').fadeIn();
 
     // Clear out the old markers.
     markers.forEach(function(marker) {
@@ -142,6 +146,7 @@ function initMap() {
         
         restmarker.addListener('click', restmarkerInf);
         function restmarkerInf() {
+
 			infowindow.setContent('<a href="'+ place.website +'"> Website </a>' + place.name + " " + 
 			place.formattedaddress + " " + place.rating //+ " " + '<a onclick="javascript:pick()"> Select </a>'
 			);
@@ -151,6 +156,9 @@ function initMap() {
       //function pick() {
 	//			print("hi");
 		//	};
+          firstLoc = place.geometry.location;
+          $('#theater-input').fadeIn();
+        };
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
@@ -199,8 +207,10 @@ function initMap() {
         
         theatermarker.addListener('click', theatermarkerInf);
         function theatermarkerInf() {
-			infowindow.setContent(place.name + " " + place.rating);
-			infowindow.open(map, this); 
+          infowindow.setContent(place.name + " " + place.rating);
+          infowindow.open(map, this); 
+          secondLoc = place.geometry.location;
+          calculateAndDisplayRoute(directionsService, directionsDisplay);
       };
 
       if (place.geometry.viewport) {
@@ -212,6 +222,32 @@ function initMap() {
       });
       map.fitBounds(bounds);
   });
+  
+  function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+    directionsService.route({
+      origin: firstLoc,
+      destination: secondLoc,
+      travelMode: google.maps.TravelMode.DRIVING
+    }, function(response, status) {
+      if (status === google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);
+        // var route = response.routes[0];
+        // var summaryPanel = document.getElementById('directions-panel');
+        // summaryPanel.innerHTML = '';
+        // // For each route, display summary information.
+        // for (var i = 0; i < route.legs.length; i++) {
+        //   var routeSegment = i + 1;
+        //   summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+        //       '</b><br>';
+        //   summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+        //   summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+        //   summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+        // }
+      } else {
+        console.log('Directions request failed due to ' + status);
+      }
+    });
+  }
 }
 //end of init
 
@@ -247,9 +283,8 @@ document.querySelector('#yourPositionZoomButton').onclick = function(){
     else 
     {
         console.log("failed");
+  }
 }
-
-};
 
      
 
