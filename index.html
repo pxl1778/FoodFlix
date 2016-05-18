@@ -59,8 +59,9 @@
       
   
       #yourPositionZoomButton{
-	      top: 220px;
-	      left: 30%;
+	      margin-left: 20px;
+        margin-top: 10px;
+        width: 110px;
       }
       
       
@@ -83,7 +84,7 @@
         margin-left: 12px;
         padding: 0 11px 0 13px;
         text-overflow: ellipsis;
-        width: 200px;
+        width: 250px;
       }
 
       #pac-input:focus {
@@ -121,9 +122,12 @@
   </head>
   <body>
   <h1><img src="food.png" height='40px' width='auto'/>  FoodFlix <img src="reel.png" height='40px' width='auto' /></h1>
-	<input id="pac-input" class="controls" type="text" placeholder="Search Box">
+	<div>
+  <input id="pac-input" class="controls" type="text" placeholder="Search by restaurant name...">
+   <button id="yourPositionZoomButton"> Your Position </button>
+   </div>
+   
     <div id="map"></div>
- <p><button id="yourPositionZoomButton"> Your Position </button></p>
     
      <footer> 
 	     &copy; 2016

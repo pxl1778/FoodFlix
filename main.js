@@ -12,37 +12,6 @@ function initMap() {
        map = new google.maps.Map(document.getElementById('map'), mapOptions);
        currentPosition = new google.maps.LatLng(43.08359, -77.66921);
        
-       //getting user's location
-       if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position)
-        {
-          currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude};
-          console.log(currentPosition.lat);
-        },
-        function showError(error) {
-          switch(error.code) {
-          case error.PERMISSION_DENIED:
-              console.log("User denied the request for Geolocation.")
-              break;
-          case error.POSITION_UNAVAILABLE:
-              console.log("Location information is unavailable.")
-              break;
-          case error.TIMEOUT:
-              console.log("The request to get user location timed out.")
-              break;
-          case error.UNKNOWN_ERROR:
-              console.log("An unknown error occurred.")
-              break;
-          }
-        });
-        map.setCenter(currentPosition);
-    }
-    else 
-    {
-        console.log("failed");
-    }
-    //end getting user's location
-       
        function addMarker(latitude, longitude, title) {
 	       var position = {lat:latitude, lng:longitude};
 	       var marker = new google.maps.Marker({position: position, map: map});
@@ -116,8 +85,37 @@ function initMap() {
 //end of init
 
 document.querySelector('#yourPositionZoomButton').onclick = function(){
-  map.setZoom(18);  
-  map.setCenter(currentPosition);
+  //getting user's location
+    if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position)
+        {
+            currentPosition = {lat: position.coords.latitude, lng: position.coords.longitude};
+            map.setZoom(18);  
+            map.setCenter(currentPosition);
+        },
+        //errors
+        function showError(error) {
+          switch(error.code) {
+          case error.PERMISSION_DENIED:
+              console.log("User denied the request for Geolocation.")
+              break;
+          case error.POSITION_UNAVAILABLE:
+              console.log("Location information is unavailable.")
+              break;
+          case error.TIMEOUT:
+              console.log("The request to get user location timed out.")
+              break;
+          case error.UNKNOWN_ERROR:
+              console.log("An unknown error occurred.")
+              break;
+          }
+        });
+
+    }
+    else 
+    {
+        console.log("failed");
+    }
 };
 
 function makeInfoWindow(position, msg){
