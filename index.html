@@ -40,12 +40,12 @@
         width: 70%;
         float: right;
          box-shadow: 0 6px rgba(0, 0, 0, 0.3);
+         display: inline;
 
       }
       
       button {
 	      position: absolute;
-
 	      color: #000;
 	      font-weight: bold;
 	      height: 30px;
@@ -73,8 +73,10 @@
 
       #restaurant-input {
         width: 250px;
+        margin-left: 35px;
       }
       
+  
       .search-box{
         background-color: #fff;
         padding: 0 11px 0 13px;
@@ -114,6 +116,8 @@
       
       #theater-input{
         display: inline;
+          width: 250px;
+          margin-left: 35px;
       }
       
       footer {
@@ -164,11 +168,23 @@
 			 border-radius: 10px;
 		 }
 		 
-     #directions-panel
+     #panel
      {
+	   margin: 12px 0 12px 35px;
+       display: inline;
+       width: 250px;
        float: left;
      }
-		  
+     
+     #reset {
+	     position: absolute; 
+	    left: 250px;
+	     bottom: 20px;
+	    border-radius: 4px;
+	    color:  #7d1319;
+	    letter-spacing: .2em;
+     }
+	  
    </style>
   </head>
   <body>
@@ -177,16 +193,19 @@
   <input id="loc-input" class="search-box"  type="text" placeholder="Search your location...">
    <button id="yourPositionZoomButton"> Your Position </button>
    </div>
-   <div style="margin-top: 100px; float: left;">
+   <div style="margin-top: 40px; float: left;">
      <input id="restaurant-input" class="search-box" type="text" placeholder="Search restaurants..." style="display: none;">
      <br></br>
      <input display="none" id="theater-input" class="search-box" type="text" placeholder="Search theaters..." style="display: none;">
     </div>
-    <div id="directions-panel">
-     </div>
-   
+     
     <div id="map"></div>
-    
+
+        <div id="panel"></div> 
+       </div>
+       
+       <button id="reset"> Reset </button>
+       
      <footer> 
 	     &copy; 2016
 	      <br > Peter Lockhart & Sara Artese 
